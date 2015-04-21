@@ -29,10 +29,13 @@ public class Token {
 
 	    }
 	    TokenType(String name) {
+	    	this.name = name;
 
 	    }
 	    
 	    TokenType(Character type, String name){
+	    	this.type = type;
+	    	this.name = name;
 	    	
 	    }
 	    
@@ -65,7 +68,7 @@ public class Token {
 	public Character getValue() {
 		return value;
 	}
-
+	
 	/**
 	 * @param value the value to set
 	 */

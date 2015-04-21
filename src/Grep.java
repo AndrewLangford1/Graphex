@@ -46,11 +46,11 @@ public class Grep {
 	private static Alphabet readFile(String file){
 		String fileAsString = InputFileReader.readFile(file);
 		
-		Alphabet learner = new Alphabet();
+		Alphabet alphabet = new Alphabet();
 		
-		learner.learnAlphabet(fileAsString);	
+		alphabet.learnAlphabet(fileAsString);	
 		
-		return learner;
+		return alphabet;
 		// learn the alphabet
 		
 		//perform grep functionality

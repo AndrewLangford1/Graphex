@@ -33,7 +33,6 @@ public class InputFileReader {
 			
 			////build the string from the file
 			String line = bufferedReader.readLine();
-			System.out.println("the line is " + line + ". the size is " + line.length());
 
 			while(line != null){
 				builder.append(line);

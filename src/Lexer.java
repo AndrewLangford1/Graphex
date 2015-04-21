@@ -68,7 +68,7 @@ public class Lexer {
 				System.out.println("found open group operator");
 				buildToken(Token.TokenType.OPENGROUP, Token.TokenType.OPENGROUP.getChar());	
 			}
-			
+				
 			break;
 			
 			case(')'):{
