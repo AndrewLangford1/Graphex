@@ -3,6 +3,7 @@ package graphex;
 
 import java.util.ArrayList;
 
+import datastructs.AbstractTree;
 import datastructs.Alphabet;
 import datastructs.Token;
 import datastructs.Tree;
@@ -64,8 +65,6 @@ public class Grep {
 		if(!tokenList.isEmpty()){
 			Tree parseTree = parseRegex(tokenList);
 			
-			parseTree.print();
-			
 		}	
 	}
 
@@ -95,7 +94,18 @@ public class Grep {
 	private static Tree parseRegex(ArrayList<Token> tokens){
 		RegexParser parser = new RegexParser(tokens);
 		
-		return parser.parseRegularExpression();
+		
+		//parse the regex
+		Tree parseTree = parser.parseRegularExpression();
+		
+		//abstract the tree
+		AbstractTree abstractTree = new AbstractTree(parseTree);
+		
+		abstractTree.convertTree();
+		
+		abstractTree.print();
+		
+		return parseTree;
 		
 	}
 	
@@ -110,7 +120,6 @@ public class Grep {
 		
 		alphabet.learnAlphabet(fileAsString);	
 		
-		System.out.println(alphabet.toString());
 		
 		return alphabet;
 	}

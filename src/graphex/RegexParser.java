@@ -29,7 +29,7 @@ public class RegexParser {
 	public Tree parseRegularExpression(){
 		
 		
-		parseTree.addBranchTreeNode("REGEX");
+		parseTree.addBranchTreeNode("<REGEX>");
 		
 		parseRegex();
 		
@@ -70,9 +70,7 @@ public class RegexParser {
 	/**
 	 * Parses a regular expression
 	 */
-	private void parseRegex() {
-		System.out.println("Parsing Regular Expression");
-		
+	private void parseRegex() {		
 		//add a sub regex branch
 		parseTree.addBranchTreeNode("<regex>");
 		
@@ -95,7 +93,6 @@ public class RegexParser {
 	 * Parses terms
 	 */
 	private void parseTerm(){
-		System.out.println("Parsing Term");
 		//add a term branch node
 		parseTree.addBranchTreeNode("<term>");
 		
@@ -135,7 +132,6 @@ public class RegexParser {
 	 * Parses factors
 	 */
 	private void parseFactor(){
-		System.out.println("Parsing Factor");
 		parseTree.addBranchTreeNode("<factor>");
 		
 		//parse the base
@@ -155,7 +151,6 @@ public class RegexParser {
 	 * Parses a base
 	 */
 	private void parseBase(){
-		System.out.println("Parsing Base");
 		parseTree.addBranchTreeNode("<base>");
 		
 		//get the next token
@@ -209,7 +204,6 @@ public class RegexParser {
 	 * parses and matches a valid character
 	 */
 	private void parseChar(){
-		System.out.println("Parsing Char");
 		parseTree.addBranchTreeNode("<char>");
 		if(hasNextToken() && nextToken().isOfType(Token.TokenType.CHAR)){
 			match(Token.TokenType.CHAR);
@@ -232,7 +226,6 @@ public class RegexParser {
 		if(nextToken != null){
 			Token.TokenType nextTokenType = nextToken.getTokenType();
 			if(nextTokenType == toMatch){
-				System.out.println("Matched a " + nextTokenType.getName() + ",  '" + nextToken.getValue() + "'");
 				parseTree.addLeafTreeNode(String.valueOf(nextToken.getValue()), nextToken());
 				consumeToken();
 				//if we get here, we are successful matching and return

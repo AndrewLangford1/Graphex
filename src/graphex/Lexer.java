@@ -39,10 +39,6 @@ public class Lexer {
 			tokenMatch(regex.charAt(i));
 		}
 		
-		for(Token x : tokenList){
-			System.out.println(x.toString());	
-		}
-		
 		return this.tokenList;
 	}
 	
@@ -56,28 +52,24 @@ public class Lexer {
 		
 		//Match operator symbols
 			case('*'):{
-				System.out.println("Found * (star) operator");
 				buildToken(Token.TokenType.STAROPERATOR, Token.TokenType.STAROPERATOR.getChar());
 			}
 			
 			break;
 			
 			case('|'):{
-				System.out.println("Found | (union operator");
 				buildToken(Token.TokenType.UNIONOPERATOR, Token.TokenType.UNIONOPERATOR.getChar());	
 			}
 			
 			break;
 			
 			case('('):{
-				System.out.println("found open group operator");
 				buildToken(Token.TokenType.OPENGROUP, Token.TokenType.OPENGROUP.getChar());	
 			}
 				
 			break;
 			
 			case(')'):{
-				System.out.println("found close group operator");
 				buildToken(Token.TokenType.CLOSEGROUP, Token.TokenType.CLOSEGROUP.getChar());
 			}
 			
@@ -87,7 +79,6 @@ public class Lexer {
 			//If we get here, these are symbols in the alphabet
 			default:{
 				if(alphabet.contains(currentChar)){
-					System.out.println("found " + currentChar);
 					buildToken(Token.TokenType.CHAR, currentChar);
 				}
 				
