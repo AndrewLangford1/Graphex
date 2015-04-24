@@ -10,12 +10,10 @@ import java.util.ArrayList;
 public class RegexParser {
 	
 	private ArrayList<Token> tokenList;
-	private ArrayList<String> errorList;
 	
 	
 	public RegexParser(ArrayList<Token> tokenList){
 		this.tokenList = tokenList;	
-		this.errorList = new ArrayList<String>();
 	}
 	
 	
@@ -26,7 +24,7 @@ public class RegexParser {
 		
 		parseRegex();
 		
-		//if we have more tokens, then there are trailing tokens.
+		//if we have more tokens, then there are trailing invalid tokens, and we should raise an error
 		if(hasNextToken()){
 			switch(nextToken().getTokenType().getName()){
 				case("OPENGROUP"):{
@@ -74,10 +72,17 @@ public class RegexParser {
 			
 	}
 	
+	/**
+	 * Parses terms
+	 */
 	private void parseTerm(){
 		System.out.println("Parsing Term");
+		
+		//parse the factor
 		parseFactor();
 		
+		
+		//if we have another char or regex, recurse back to parse term.
 		if(hasNextToken()){
 			switch(nextToken().getTokenType().getName()){
 				case("CHAR"):{
@@ -94,34 +99,54 @@ public class RegexParser {
 				break;
 				
 				default :{
-					
+					//otherwise end <factor> <term> recursion.
+					return;
 					
 				}
 			}			
 		}
 	}
 	
+	
+	/**
+	 * Parses factors
+	 */
 	private void parseFactor(){
 		System.out.println("Parsing Factor");
+		
+		//parse the base
 		parseBase();
 		
+		//parse 1 or many star operators, will delete erroneous star operators later on 
 		while(hasNextToken() && nextToken().isOfType(Token.TokenType.STAROPERATOR)){
 			match(Token.TokenType.STAROPERATOR);
 		}
 	
 	}
 	
+	
+	/**
+	 * Parses a base
+	 */
 	private void parseBase(){
-		System.out.println("Parsin Base");
+		System.out.println("Parsing Base");
+		
+		//get the next token
 		Token nextToken = nextToken();
+		
 		if(nextToken != null){
+			
 			switch(nextToken.getTokenType().getName()){
+			
+			//--chars and opengroups are valid first sets of bases.
 				case("CHAR"):{
 					parseChar();
 				} 
 				
 				break;
 				
+				
+				//starts a new regex
 				case("OPENGROUP"):{
 					match(Token.TokenType.OPENGROUP);
 					
@@ -134,12 +159,16 @@ public class RegexParser {
 				
 				break;
 			
+				
+				//If we get anything else, we know its an error
 				default: {
 					String error = "Expected '( <regex> )' or <char>, received " + nextToken.getTokenType().getName();
 					raiseErrorParsing(error);
 				}	
 			}
 		}
+		
+		//we were expecting either a char or a new group, but received nothing.
 		else{
 			String error = "Expected '( <regex> )' or <char>, received NULL";
 			raiseErrorParsing(error);
@@ -213,6 +242,13 @@ public class RegexParser {
 		}	
 	}
 	
+	
+	/**
+	 * 
+	 * Raises an error and exits the program gracefully.
+	 * 
+	 * @param errorMessage the error message we want to print
+	 */
 	private void raiseErrorParsing(String errorMessage){
 		System.out.println(errorMessage);
 		System.out.println("Regex parse failed. Grep exiting.........");
