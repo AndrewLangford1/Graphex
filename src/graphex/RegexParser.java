@@ -1,4 +1,8 @@
+package graphex;
 import java.util.ArrayList;
+
+import datastructs.Token;
+import datastructs.Tree;
 
 
 
@@ -10,17 +14,22 @@ import java.util.ArrayList;
 public class RegexParser {
 	
 	private ArrayList<Token> tokenList;
+	private Tree parseTree;
 	
 	
 	public RegexParser(ArrayList<Token> tokenList){
 		this.tokenList = tokenList;	
+		this.parseTree = new Tree();
 	}
 	
 	
 	/**
 	 * method to initialize recursive descent parser
 	 */
-	public void parseRegularExpression(){
+	public Tree parseRegularExpression(){
+		
+		
+		parseTree.addBranchTreeNode("REGEX");
 		
 		parseRegex();
 		
@@ -51,6 +60,10 @@ public class RegexParser {
 				
 			}
 		}
+		
+		parseTree.returnToParent();
+		
+		return parseTree;
 	}
 
 	
@@ -60,15 +73,21 @@ public class RegexParser {
 	private void parseRegex() {
 		System.out.println("Parsing Regular Expression");
 		
+		//add a sub regex branch
+		parseTree.addBranchTreeNode("<regex>");
+		
+		
 		//simple term case
 		parseTerm();
-		
-		
+				
 		//Union operation
 		if(hasNextToken() && nextToken().isOfType(Token.TokenType.UNIONOPERATOR)){
 			match(Token.TokenType.UNIONOPERATOR);
 			parseRegex();
 		}
+		
+		//return to parent regex.
+		parseTree.returnToParent();
 			
 	}
 	
@@ -77,9 +96,13 @@ public class RegexParser {
 	 */
 	private void parseTerm(){
 		System.out.println("Parsing Term");
+		//add a term branch node
+		parseTree.addBranchTreeNode("<term>");
+		
 		
 		//parse the factor
 		parseFactor();
+		
 		
 		
 		//if we have another char or regex, recurse back to parse term.
@@ -99,12 +122,12 @@ public class RegexParser {
 				break;
 				
 				default :{
-					//otherwise end <factor> <term> recursion.
-					return;
 					
 				}
 			}			
 		}
+		
+		parseTree.returnToParent();
 	}
 	
 	
@@ -113,6 +136,7 @@ public class RegexParser {
 	 */
 	private void parseFactor(){
 		System.out.println("Parsing Factor");
+		parseTree.addBranchTreeNode("<factor>");
 		
 		//parse the base
 		parseBase();
@@ -121,6 +145,8 @@ public class RegexParser {
 		while(hasNextToken() && nextToken().isOfType(Token.TokenType.STAROPERATOR)){
 			match(Token.TokenType.STAROPERATOR);
 		}
+		
+		parseTree.returnToParent();
 	
 	}
 	
@@ -130,6 +156,7 @@ public class RegexParser {
 	 */
 	private void parseBase(){
 		System.out.println("Parsing Base");
+		parseTree.addBranchTreeNode("<base>");
 		
 		//get the next token
 		Token nextToken = nextToken();
@@ -173,6 +200,8 @@ public class RegexParser {
 			String error = "Expected '( <regex> )' or <char>, received NULL";
 			raiseErrorParsing(error);
 		}
+		
+		parseTree.returnToParent();
 	}
 	
 	
@@ -181,13 +210,16 @@ public class RegexParser {
 	 */
 	private void parseChar(){
 		System.out.println("Parsing Char");
+		parseTree.addBranchTreeNode("<char>");
 		if(hasNextToken() && nextToken().isOfType(Token.TokenType.CHAR)){
 			match(Token.TokenType.CHAR);
 		}
 		else{
 			System.out.println("wasn't a char");
 			
-		}	
+		}
+		
+		parseTree.returnToParent();
 	}
 	
 	
@@ -201,6 +233,7 @@ public class RegexParser {
 			Token.TokenType nextTokenType = nextToken.getTokenType();
 			if(nextTokenType == toMatch){
 				System.out.println("Matched a " + nextTokenType.getName() + ",  '" + nextToken.getValue() + "'");
+				parseTree.addLeafTreeNode(String.valueOf(nextToken.getValue()), nextToken());
 				consumeToken();
 				//if we get here, we are successful matching and return
 				return;

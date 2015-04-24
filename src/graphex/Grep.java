@@ -1,14 +1,28 @@
+package graphex;
 
 
 import java.util.ArrayList;
 
+import datastructs.Alphabet;
+import datastructs.Token;
+import datastructs.Tree;
 import utilities.InputFileReader;
 
 
- 	
+ /**
+  * Main Class
+  * @author Andrew
+  *
+  */
 
 public class Grep {
 	
+	
+	/**
+	 * Main function
+	 * 
+	 * @param args command line args
+	 */
 	public static void main(String[] args){
 		
 		try{
@@ -48,7 +62,9 @@ public class Grep {
 		ArrayList<Token> tokenList = lexRegex(regex, alphabet);
 		
 		if(!tokenList.isEmpty()){
-			parseRegex(tokenList);
+			Tree parseTree = parseRegex(tokenList);
+			
+			parseTree.print();
 			
 		}	
 	}
@@ -76,11 +92,10 @@ public class Grep {
 	 * 
 	 * @param tokens the regex split up into lex tokens
 	 */
-	private static void parseRegex(ArrayList<Token> tokens){
+	private static Tree parseRegex(ArrayList<Token> tokens){
 		RegexParser parser = new RegexParser(tokens);
 		
-		parser.parseRegularExpression();
-		
+		return parser.parseRegularExpression();
 		
 	}
 	
