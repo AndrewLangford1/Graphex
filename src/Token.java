@@ -52,6 +52,8 @@ public class Token {
 	private TokenType tokenType;
 	private Character value;
 	
+//--METHODS--//
+	
 	public Token(){
 		this.tokenType = null;
 		this.value = null;
@@ -75,16 +77,44 @@ public class Token {
 	public void setValue(Character value) {
 		this.value = value;
 	}
-
+	
+	/**
+	 * 
+	 * @return the token type
+	 */
 	public TokenType getTokenType(){
 		return this.tokenType;
 	}
 	
+	/**
+	 * 
+	 * @param type the token type to set
+	 */
 	public void setToken(TokenType type){
 		this.tokenType = type;
 		
 	}
 	
+	
+	/**
+	 * 
+	 * @param tokenType
+	 * @return
+	 */
+	public boolean isOfType(Token.TokenType tokenType){
+		if(getTokenType() == tokenType){
+			return true;
+		}
+		else{
+			return false;
+			
+		}
+	}
+	
+	
+	/**
+	 * Returns this object as a string
+	 */
 	public String toString(){
 		String asString = "<" + this.getValue() + " , " + this.getTokenType().getName() +">";
 		return asString;	

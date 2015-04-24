@@ -31,7 +31,7 @@ public class Lexer {
 	/**
 	 * Matches tokens and builds a token list to be sent to a regular expression parser.
 	 */
-	public void lex(){
+	public ArrayList<Token> lex(){
 		for(int i =0; i< regex.length(); i++){
 			tokenMatch(regex.charAt(i));
 		}
@@ -39,6 +39,8 @@ public class Lexer {
 		for(Token x : tokenList){
 			System.out.println(x.toString());	
 		}
+		
+		return this.tokenList;
 	}
 	
 	
