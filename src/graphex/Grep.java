@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import datastructs.AbstractTree;
 import datastructs.Alphabet;
+import datastructs.FiniteAutomaton;
 import datastructs.Token;
 import datastructs.Tree;
 import utilities.InputFileReader;
@@ -63,9 +64,10 @@ public class Grep {
 		ArrayList<Token> tokenList = lexRegex(regex, alphabet);
 		
 		if(!tokenList.isEmpty()){
-			Tree parseTree = parseRegex(tokenList);
+			AbstractTree abstractTree = parseRegex(tokenList);	
 			
-		}	
+			buildNFA(abstractTree);	
+		}		
 	}
 
 	
@@ -91,7 +93,7 @@ public class Grep {
 	 * 
 	 * @param tokens the regex split up into lex tokens
 	 */
-	private static Tree parseRegex(ArrayList<Token> tokens){
+	private static AbstractTree parseRegex(ArrayList<Token> tokens){
 		RegexParser parser = new RegexParser(tokens);
 		
 		
@@ -105,7 +107,7 @@ public class Grep {
 		
 		abstractTree.print();
 		
-		return parseTree;
+		return abstractTree;
 		
 	}
 	
@@ -122,6 +124,14 @@ public class Grep {
 		
 		
 		return alphabet;
+	}
+	
+	private static void buildNFA(AbstractTree parseTree){
+		NFAGen nfaGen = new NFAGen(parseTree);
+		FiniteAutomaton nfa =  nfaGen.generateNFA();
+		nfa.printFiniteAutomaton();
+		
+		
 	}
 	
 

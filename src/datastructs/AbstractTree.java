@@ -99,9 +99,11 @@ public class AbstractTree extends Tree{
 	 * @param currentNode
 	 */
 	private void abstractRegularExpression(TreeNode currentNode){
+		this.addBranchTreeNode("<REGEX>");
 		if(currentNode.hasChildren()){
 			abstractSubtree(currentNode.getChildren().get(0));
 		}
+		this.returnToParent();
 	}
 	
 	
@@ -110,7 +112,7 @@ public class AbstractTree extends Tree{
 	 * @param currentNode
 	 */
 	private void abstractRegex(TreeNode currentNode){
-		addBranchTreeNode("<Regex>");
+		//addBranchTreeNode("<Regex>");
 		if(currentNode.hasChildren()){
 			ArrayList<TreeNode> children = currentNode.getChildren();
 			
@@ -136,7 +138,7 @@ public class AbstractTree extends Tree{
 			}
 		}
 		
-		returnToParent();
+		//returnToParent();
 	}
 	
 	
