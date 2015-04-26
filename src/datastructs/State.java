@@ -19,6 +19,7 @@ public class State {
 	
 	//whether or not this state is an accepting state
 	private boolean isAcceptingState;
+	private String name;
 	
 	
 	//transition function for this state
@@ -28,6 +29,7 @@ public class State {
 	public State(){
 		this.isAcceptingState = false;
 		this.transitions = new HashMap<String, ArrayList<State>>();
+		this.name = "q" + (int)(Math.random() * 10000);
 	}
 	
 	public State(boolean isAcceptingState, boolean isStartState, HashMap<String, ArrayList<State>> transitions){
@@ -83,12 +85,24 @@ public class State {
 		}
 	}
 	
+	public String getName(){
+		return this.name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	
 	public void print(){
-		String toPrint = " /--STATE--/ \n" + UUID.randomUUID() + "\n";
+		String toPrint = " /--STATE--/ \n";
+		toPrint += "ID => " + this.getName() +  "\n";
 		toPrint  += "Accepting State => " + this.isAcceptingState + "\n";
 		toPrint += "/--Transitions--/ \n";
 		for(String key : transitions.keySet()){
-			toPrint += key + " => " + transitions.get(key).toString();
+			for(State state : transitions.get(key)){
+				toPrint += key + " => " + state.getName() + "\n";
+			}
 		}
 		
 		System.out.println(toPrint);

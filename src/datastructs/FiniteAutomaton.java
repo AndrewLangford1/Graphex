@@ -11,13 +11,13 @@ public class FiniteAutomaton {
 	public FiniteAutomaton(){
 		this.states = new ArrayList<State>();
 		this.startState = null;
-	
+		
 	}
 	
 	
 	/**
 	 * returns all of the states contained in this finite automaton
-	 * 
+	 * 	
 	 * @return the states in the FA
 	 */
 	public ArrayList<State> getStates(){
@@ -78,10 +78,14 @@ public class FiniteAutomaton {
 		
 	public void printFiniteAutomaton(){
 		System.out.println("Number of states => " + states.size());
+		System.out.println("START STATE => ");
+		this.startState.print();
 		for(State state : states){
 			System.out.println();
 			System.out.println();
-			state.print();
+			if(state != startState){
+				state.print();
+			}
 		}
 	}
 }

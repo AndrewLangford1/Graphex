@@ -1,0 +1,13 @@
+
+digraph FiniteAutomaton {
+rankdir=LR;
+node [shape = point ]; qi;
+node [shape = circle]; q9354;
+node [shape = doublecircle]; q101;
+node [shape = circle]; q2323;
+node [shape = circle]; q269;
+qi-> q9354;
+q9354 -> q2323[ label = " epsilon" ]; 
+q2323 -> q269[ label = " a" ]; 
+q269 -> q101[ label = " epsilon" ]; 
+}
