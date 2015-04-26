@@ -57,13 +57,13 @@ public class NFAGen {
 			
 			break;
 			
-			case("<CONCATENATION>"):{
+			case("<CONCATENTATION>"):{
 				subAutomaton = buildConcatenation(currentNode);
 			}
 			
 			break;
 			
-			case("<GROUPING"):{
+			case("<GROUPING>"):{
 				subAutomaton = buildGrouping(currentNode);
 			}
 			
@@ -159,11 +159,12 @@ public class NFAGen {
 		FiniteAutomaton grouping = blankAutomaton();
 		
 		//build a subautomaton for the rest of the regex.
+		System.out.println("Aosifjweif");
+		System.out.println(currentNode.getChildren().get(0).getValue());
 		FiniteAutomaton subAutomaton = buildSubAutomaton(currentNode.getChildren().get(0));
 		
 		//add epsilon transition from the regex start state to the sub's start state
 		patchStartState(grouping, subAutomaton);
-		
 		
 		//add epsilon transitions from the subs accepting states to the new accepting state
 		patchAcceptingStates(grouping, subAutomaton);
