@@ -25,8 +25,11 @@ public class FiniteAutomaton {
 	}
 	
 	public void addStates(ArrayList<State> statesToAdd){
+		int count = 0;
 		for(State state : statesToAdd){
+			state.setName("q" + count);
 			states.add(state);
+			count++;
 		}
 	}
 	
@@ -45,6 +48,7 @@ public class FiniteAutomaton {
 	 */
 	public void createStartState(){
 		State startState = new State();
+		startState.setName("qStart");
 		addState(startState);
 		this.startState = startState;
 	}
@@ -52,6 +56,7 @@ public class FiniteAutomaton {
 	public void createAcceptingState(){
 		State acceptingState = new State();
 		acceptingState.setAcceptingState(true);
+		acceptingState.setName("qAccept");
 		addState(acceptingState);
 	}
 	

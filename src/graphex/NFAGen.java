@@ -159,8 +159,6 @@ public class NFAGen {
 		FiniteAutomaton grouping = blankAutomaton();
 		
 		//build a subautomaton for the rest of the regex.
-		System.out.println("Aosifjweif");
-		System.out.println(currentNode.getChildren().get(0).getValue());
 		FiniteAutomaton subAutomaton = buildSubAutomaton(currentNode.getChildren().get(0));
 		
 		//add epsilon transition from the regex start state to the sub's start state
@@ -280,7 +278,6 @@ public class NFAGen {
 		System.out.println("patching accepting states");
 		//add an epsilon transition from the old accepting states to the new accepting state.
 		for(State state: sub.getAcceptingStates()){
-			
 			//note, we know that the new regex only has a single accepting state, because we just built it.
 			state.addTransition("epsilon", supra.getAcceptingStates().get(0));
 
